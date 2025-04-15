@@ -1,7 +1,7 @@
-import { TAcademicSemester } from '../AcademicSemester/academicSemester.interface';
+
 import { User } from './user.model';
 
-const findLastStudentId = async () => {
+export const findLastStudentId = async () => {
   const lastStudent = await User.findOne(
     {
       role: 'student',
@@ -19,29 +19,12 @@ const findLastStudentId = async () => {
   return lastStudent?.id ? lastStudent.id : undefined;
 };
 
-export const generateStudentId = async (payload: TAcademicSemester) => {
-  let currentId = (0).toString();
-  const lastStudentId = await findLastStudentId();
-
-  const lastStudentSemesterCode = lastStudentId?.substring(4, 6);
-  const lastStudentYear = lastStudentId?.substring(0, 4);
-
-  const currentSemesterCode = payload.code;
-  const currentYear = payload.year;
-
-  if (
-    lastStudentId &&
-    lastStudentSemesterCode === currentSemesterCode &&
-    lastStudentYear === currentYear
-  ) {
-    currentId = lastStudentId.substring(6);
-  }
-
-  let incrementId = (Number(currentId) + 1).toString().padStart(4, '0');
-
-  incrementId = `${payload.year}${payload.code}${incrementId}`;
-
-  return incrementId;
+export const generateUserId = async() => {
+  const letter1 = 'M'; // static prefix
+  const number = Math.floor(100 + Math.random() * 900); // 3-digit random number (100–999)
+  const letter2 = String.fromCharCode(65 + Math.floor(Math.random() * 26)); // random uppercase letter (A–Z)
+  
+  return `${letter1}-${number}${letter2}`;
 };
 
 // Faculty ID

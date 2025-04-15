@@ -3,59 +3,27 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { UserServices } from './user.service';
 
-const createReader = catchAsync(async (req, res) => {
-  const { password, reader: ReaderData } = req.body;
+const createUser = catchAsync(async (req, res) => {
+  const { password, User: UserData } = req.body;
 
-  const result = await UserServices.createReaderIntoDB(
+  const result = await UserServices.createUserIntoDB(
     req.file,
     password,
-    ReaderData,
+    UserData,
   );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Reader is created succesfully',
+    message: 'User is created succesfully',
     data: result,
   });
 });
 
-const createWriter = catchAsync(async (req, res) => {
-  const { password, writer: WriterData } = req.body;
-
-  const result = await UserServices.createWriterIntoDB(
-    req.file,
-    password,
-    WriterData,
-  );
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Writer is created succesfully',
-    data: result,
-  });
-});
-
-const createAdmin = catchAsync(async (req, res) => {
-  const { password, admin: adminData } = req.body;
-  const result = await UserServices.createAdminIntoDB(
-    req.file,
-    password,
-    adminData,
-  );
-
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: 'Admin is created succesfully',
-    data: result,
-  });
-});
 
 const getMe = catchAsync(async (req, res) => {
-  const { userId, role } = req.user;
-  const result = await UserServices.getMe(userId, role);
+  const { userId} = req.user;
+  const result = await UserServices.getMe(userId);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -78,9 +46,7 @@ const changeStatus = catchAsync(async (req, res) => {
   });
 });
 export const UserControllers = {
-  createReader,
-  createWriter,
-  createAdmin,
+  createUser,
   getMe,
   changeStatus,
 };

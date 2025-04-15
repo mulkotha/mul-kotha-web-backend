@@ -12,6 +12,12 @@ const userSchema = new Schema<TUser, UserModel>(
       required: true,
       unique: true,
     },
+    name:{
+      type: String,
+    },
+    profileImg:{
+      type:String,
+    },
     email: {
       type: String,
       required: true,
@@ -27,6 +33,7 @@ const userSchema = new Schema<TUser, UserModel>(
     role: {
       type: String,
       enum: ['superAdmin', 'reader','writer', 'admin'],
+      default: 'reader',
     },
     status: {
       type: String,

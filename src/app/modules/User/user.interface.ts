@@ -4,7 +4,9 @@ import { USER_ROLE } from './user.constant';
 
 export interface TUser {
   id: string;
+  name:string;
   email: string;
+  profileImg: string;
   password: string;
   passwordChangedAt?: Date;
   role: 'superAdmin' | 'admin' |  'writer' |  'reader';
